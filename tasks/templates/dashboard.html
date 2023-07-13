@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="container py-5">
+    <section card="card card-body">
+        <div class="text-center">
+            <h1 class="display-4">Dashboard</h1>
+            <p class="lead">
+                Welcome to your Dashboard. Dive into the ocean of your tasks and stay organized.
+            </p>
+            <div class="ocean">
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+            <div class="text-center mt-4">
+                <a class="btn btn-primary btn-lg" href="/tasks/">View Tasks</a>
+                <a class="btn btn-outline-primary btn-lg" href="/logout/">Logout</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    .ocean {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .wave {
+        background: url("{% static 'images/wave-img.jpg' %}") repeat-x;
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+        height: 150px;
+        transform: translate3d(0, 0, 0);
+        opacity: 1; /* Ajusta la opacidad según tus preferencias */
+        animation: wave 10s linear infinite;
+    }
+
+    @keyframes wave {
+        0% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+</style>
+
+{% endblock %}

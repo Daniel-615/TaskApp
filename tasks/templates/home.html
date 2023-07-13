@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<main class="container py-5">
+    <section card="card card-body">
+        <div class="text-center">
+            {% if user.is_authenticated %}
+            <div class="text-center mt-4">
+                <h3>Welcome, {{ user.username }}!</h3>
+                <!-- Contenido exclusivo para usuarios autenticados -->
+                <p>This is exclusive content for authenticated users.</p>
+                <a class="btn btn-primary btn-lg" href="/dashboard/">Go to Dashboard</a>
+                <a class="btn btn-outline-primary btn-lg" href="/logout/">Logout</a>
+            </div>
+            {% else %}
+            <h1 class="display-4">Welcome to TaskApp!</h1>
+            <p class="lead">
+                Please create an account or sign in using the buttons below.
+            </p>
+            <div class="text-center mt-4">
+                <a class="btn btn-primary btn-lg me-3" href="/signin/">Sign In</a>
+                <a class="btn btn-outline-primary btn-lg" href="/signup/">Sign Up</a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock %}
