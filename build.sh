@@ -1,4 +1,4 @@
-#!/usr/bin/env/bash
+#!/usr/bin/venv/bash
 #exit on error
 set -o errexit
 #poetry install
