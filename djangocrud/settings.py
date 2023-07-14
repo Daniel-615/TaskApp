@@ -77,13 +77,15 @@ WSGI_APPLICATION = "djangocrud.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
-   'default': dj_database_url.config(
-       default='postgres://djangocrud_iqxg_user:Kk7V8a7BWIfEX8uNaN6dwtqC0eS1PwqL@dpg-cio6jil9aq06u3n0a4gg-a/djangocrud_iqxg',
-       conn_max_age=600
-   )
-   
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOSTNAME'),
+        'PORT': '5432',
+    }
 }
 
 
