@@ -80,10 +80,10 @@ WSGI_APPLICATION = "djangocrud.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME'),
-        'USER': os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-        'HOST': os.environ.get('DATABASE_HOSTNAME'),
+        'NAME': 'djangocrud_iqxg',
+        'USER': 'djangocrud_iqxg_user',
+        'PASSWORD': 'Kk7V8a7BWIfEX8uNaN6dwtqC0eS1PwqL',
+        'HOST': 'dpg-cio6jil9aq06u3n0a4gg-a',
         'PORT': 5432,
     }
 }
