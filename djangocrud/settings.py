@@ -129,3 +129,10 @@ STATICFILES_DIRS = [
     # Ruta a la carpeta 'static' en tu proyecto
     os.path.join(BASE_DIR, 'static'),
 ]
+
+EMAIL_HOST_USER = 'testdjangopruebas@gmail.com'  # Reemplaza con tu dirección de correo electrónico
+EMAIL_HOST_PASSWORD = 'djangopruebas||11299|'  # Reemplaza con tu contraseña de correo electrónico
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST="stmp.gmail.com"
+EMAIL_USE_TLS=True
+EMAIL_PORT=587
