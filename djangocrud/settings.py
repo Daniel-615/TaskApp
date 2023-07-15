@@ -65,12 +65,9 @@ WSGI_APPLICATION = "djangocrud.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+DATABASE_URL = os.environ.get('DATABASE_URL')
 DATABASES={
-    'default':dj_database_url.config(
-        default='postgresql://postgres@localhost/postgres',
-        conn_max_age=600
-    )
+    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
 }
 
 
