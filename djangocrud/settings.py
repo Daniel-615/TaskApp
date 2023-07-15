@@ -65,7 +65,7 @@ WSGI_APPLICATION = "djangocrud.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-DATABASE_URL = os.environ.get('DATABASE_URL')
+DATABASE_URL = 'postgres://taskapp_0pmt_user:9DVzAfMzwtSRLa71DeHIjXdblwf8ekQ7@dpg-ciocv95gkuvh5gn4mum0-a/taskapp_0pmt'
 try:
     # Intenta cargar la configuración desde la URL de conexión
     DATABASES = {
