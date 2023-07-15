@@ -12,9 +12,9 @@
                         <p class="mb-0">{{ task.user.username }}</p>
                     </div>
                     <p class="mb-1">{{ task.description }}</p>
-                   {%if task.date_completed%}
-                        <p class="mb-0">Completed: {{ task.date_completed|date:"M j, Y - H:i" }}</p>
-                   {%endif%}
+                    {% if task.date_completed %}
+                    <p class="mb-0">Completed: {{ task.date_completed|date:"M j, Y - H:i" }}</p>
+                    {% endif %}
                 </a>
                 {% empty %}
                 <p class="text-center">No tasks available.</p>
@@ -23,4 +23,21 @@
         </div>
     </div>
 </main>
+
+<style>
+    @media (max-width: 576px) {
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .col-md-8.offset-md-2 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .display-3 {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+
 {% endblock %}
