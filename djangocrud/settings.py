@@ -65,26 +65,20 @@ WSGI_APPLICATION = "djangocrud.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-DATABASE_URL = 'postgres://taskapp_0pmt_user:9DVzAfMzwtSRLa71DeHIjXdblwf8ekQ7@dpg-ciocv95gkuvh5gn4mum0-a/taskapp_0pmt'
-try:
-    # Intenta cargar la configuración desde la URL de conexión
-    DATABASES = {
-        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
-    }
-except Exception:
+
     # Si ocurre una excepción (por ejemplo, si DATABASE_URL no está configurado correctamente),
     # utiliza una configuración de base de datos alternativa
-    DATABASES = {
-        'default': {
+DATABASES = {
+    'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': os.environ.get('DATABASE_NAME'),
             'USER': os.environ.get('DATABASE_USER'),
             'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
             'HOST': os.environ.get('DATABASE_HOSTNAME'),
             'PORT': os.environ.get('DATABASE_PORT'),
-        }
     }
-print(DATABASE_URL)
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
