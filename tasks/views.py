@@ -134,10 +134,10 @@ def ChangePassword(request,token):
             
             if user_id is None:
                 messages.success(request,'No user id found.')
-                return redirect(f'change-password/{token}/')
+                return redirect(f'/change-password/{token}/')
             if new_password!=confirm_password:
                 messages.success(request,'Password do not match')
-                return redirect(f'change-password/{token}/')
+                return redirect(f'/change-password/{token}/')
             user_obj=User.objects.get(id=user_id)
             user_obj.set_password=(new_password)
             user_obj.save()
@@ -154,7 +154,7 @@ def ForgetPassword(request):
             username=request.POST.get('username')
             if not User.objects.filter(username=username).first():
                 messages.success(request,'Not user found with this username.')
-                return redirect('forget-password/')
+                return redirect('/forget-password/')
             
             user_obj=User.objects.get(username=username)
             token=str(uuid.uuid4())
@@ -164,7 +164,7 @@ def ForgetPassword(request):
             send_forget_password_mail(user_obj,token)
 
             messages.success(request,'An email is sent.')
-            return redirect('forget-password/')
+            return redirect('/forget-password/')
     except Exception as e:
         print(e)
     return render(request,'forget-password.html')
