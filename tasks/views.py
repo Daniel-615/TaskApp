@@ -165,6 +165,8 @@ def ChangePassword(request, token):
 def ForgetPassword(request):
     try:
         print("Has entrado al forget password")
+        if request.method=='GET':
+            return render(request,'forget-password.html')
         if request.method == 'POST':
             username = request.POST.get('username')
             if not User.objects.filter(username=username).exists():
