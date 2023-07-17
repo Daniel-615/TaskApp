@@ -122,12 +122,10 @@ def signin(request):
 import uuid
 
 def ChangePassword(request, token):
-    context = {}
-
     try:
         profile_obj = Profile.objects.filter(forget_password_token=token).first()
         if profile_obj is None:
-            messages.success(request, 'Invalid token.')
+            messages.error(request, 'Invalid token.')
             return redirect('/change-password/')
 
         context = {'user_id': profile_obj.user.id}
@@ -138,29 +136,39 @@ def ChangePassword(request, token):
             user_id = request.POST.get('user_id')
 
             if user_id is None:
-                messages.success(request, 'No user id found.')
+                messages.error(request, 'No user id found.')
                 return redirect(f'/change-password/{token}/')
 
             if new_password != confirm_password:
-                messages.success(request, 'Passwords do not match.')
+                messages.error(request, 'Passwords do not match.')
                 return redirect(f'/change-password/{token}/')
 
             user_obj = User.objects.get(id=user_id)
             user_obj.set_password(new_password)
             user_obj.save()
+
+            messages.success(request, 'Password has been changed successfully. Please log in with your new password.')
             return redirect('login')
 
+    except Profile.DoesNotExist:
+        messages.error(request, 'Invalid token.')
+        return redirect('/change-password/')
+    except User.DoesNotExist:
+        messages.error(request, 'User does not exist.')
+        return redirect('/change-password/')
     except Exception as e:
+        messages.error(request, 'An error occurred.')
         print(e)
 
     return render(request, 'change-password.html', context)
 
 def ForgetPassword(request):
     try:
+        print("Has entrado al forget password")
         if request.method == 'POST':
             username = request.POST.get('username')
             if not User.objects.filter(username=username).exists():
-                messages.success(request, 'No user found with this username.')
+                messages.error(request, 'No user found with this username.')
                 return redirect('/forget-password/')
 
             user_obj = User.objects.get(username=username)
@@ -170,10 +178,14 @@ def ForgetPassword(request):
             profile_obj.save()
             send_forget_password_mail(user_obj, token)
 
-            messages.success(request, 'An email has been sent.')
+            messages.success(request, 'An email has been sent with instructions to reset your password.')
             return redirect('/forget-password/')
 
+    except User.DoesNotExist:
+        messages.error(request, 'User does not exist.')
+        return redirect('/forget-password/')
     except Exception as e:
+        messages.error(request, 'An error occurred.')
         print(e)
 
     return render(request, 'forget-password.html')
