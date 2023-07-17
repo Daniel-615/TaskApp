@@ -121,51 +121,59 @@ def signin(request):
 
 import uuid
 
-def ChangePassword(request,token):
-    context={}
-    
+def ChangePassword(request, token):
+    context = {}
+
     try:
-        profile_obj=Profile.objects.filter(forget_password_token=token).first()
-        context={'user_id':profile_obj.user.id}
-        if request.method=='POST':
-            new_password=request.POST.get('new_password')
-            confirm_password=request.POST.get('reconfirm_password')
-            user_id=request.POST.get('user_id')
-            
+        profile_obj = Profile.objects.filter(forget_password_token=token).first()
+        if profile_obj is None:
+            messages.success(request, 'Invalid token.')
+            return redirect('/change-password/')
+
+        context = {'user_id': profile_obj.user.id}
+
+        if request.method == 'POST':
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('reconfirm_password')
+            user_id = request.POST.get('user_id')
+
             if user_id is None:
-                messages.success(request,'No user id found.')
+                messages.success(request, 'No user id found.')
                 return redirect(f'/change-password/{token}/')
-            if new_password!=confirm_password:
-                messages.success(request,'Password do not match')
+
+            if new_password != confirm_password:
+                messages.success(request, 'Passwords do not match.')
                 return redirect(f'/change-password/{token}/')
-            user_obj=User.objects.get(id=user_id)
-            user_obj.set_password=(new_password)
+
+            user_obj = User.objects.get(id=user_id)
+            user_obj.set_password(new_password)
             user_obj.save()
             return redirect('login')
-       
+
     except Exception as e:
         print(e)
-    
-    return render(request,'change-password.html',context)
+
+    return render(request, 'change-password.html', context)
 
 def ForgetPassword(request):
     try:
-        if request.method=='POST':
-            username=request.POST.get('username')
-            if not User.objects.filter(username=username).first():
-                messages.success(request,'Not user found with this username.')
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            if not User.objects.filter(username=username).exists():
+                messages.success(request, 'No user found with this username.')
                 return redirect('/forget-password/')
-            
-            user_obj=User.objects.get(username=username)
-            token=str(uuid.uuid4())
-            profile_obj=Profile.objects.get(user=user_obj)
-            profile_obj.forget_password_token=token
-            profile_obj.save()
-            send_forget_password_mail(user_obj,token)
 
-            messages.success(request,'An email is sent.')
+            user_obj = User.objects.get(username=username)
+            token = str(uuid.uuid4())
+            profile_obj = Profile.objects.get(user=user_obj)
+            profile_obj.forget_password_token = token
+            profile_obj.save()
+            send_forget_password_mail(user_obj, token)
+
+            messages.success(request, 'An email has been sent.')
             return redirect('/forget-password/')
+
     except Exception as e:
         print(e)
-    return render(request,'forget-password.html')
 
+    return render(request, 'forget-password.html')
