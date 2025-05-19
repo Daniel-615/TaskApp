@@ -23,6 +23,11 @@ RENDER_EXTERNAL_HOSTNAME=os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 # Application definition
+host = os.environ.get('AZURE_HOSTNAME')
+if host:
+    CSRF_TRUSTED_ORIGINS = ['https://' + host]
+else:
+    CSRF_TRUSTED_ORIGINS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
