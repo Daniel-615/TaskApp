@@ -32,6 +32,10 @@ if host:
     CSRF_TRUSTED_ORIGINS = ['https://' + host]
 else:
     CSRF_TRUSTED_ORIGINS = []
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",
