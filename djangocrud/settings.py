@@ -1,6 +1,10 @@
 from pathlib import Path
 import os
 import dj_database_url
+import dotenv
+
+# Cargar las variables de entorno desde el archivo .env
+dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -79,18 +83,19 @@ WSGI_APPLICATION = "djangocrud.wsgi.application"
     # utiliza una configuración de base de datos alternativa
 DATABASES = {
     'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DATABASE_NAME'),
-            'USER': os.environ.get('DATABASE_USER'),
-            'PASSWORD': os.environ.get('DATABASE_PASSWORD'), 
-            'HOST': os.environ.get('DATABASE_HOSTNAME'),
-            'PORT': os.environ.get('DATABASE_PORT'),
-            'OPTIONS': {
-                'sslmode': 'require',
-            },
-        }
-        
+        'ENGINE': 'mssql',
+        'NAME': os.environ.get('DATABASE_NAME', 'certificado_factura'),
+        'USER': os.environ.get('DATABASE_USER', 'sa'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'Colochampi1234'),
+        'HOST': os.environ.get('DATABASE_HOSTNAME', '20.84.115.109'),
+        'PORT': os.environ.get('DATABASE_PORT', '1433'),
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trust_server_certificate': 'yes',
+        },
+    }
 }
+
 
 
 # Password validation
